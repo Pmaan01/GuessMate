@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34928.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuessMate", "GuessMate\GuessMate.csproj", "{EC70BB56-33F9-4D71-9118-11D9B64B8F5B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC70BB56-33F9-4D71-9118-11D9B64B8F5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC70BB56-33F9-4D71-9118-11D9B64B8F5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC70BB56-33F9-4D71-9118-11D9B64B8F5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC70BB56-33F9-4D71-9118-11D9B64B8F5B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {21C6FDC3-1A3A-4FCC-82BA-C3B7D51A2EC3}
+	EndGlobalSection
+EndGlobal

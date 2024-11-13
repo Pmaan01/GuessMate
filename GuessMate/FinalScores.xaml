@@ -1,0 +1,19 @@
+﻿<Window x:Class="GuessMate.FinalScores"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="GuessMate - Final Scores" Height="738" Width="459" ResizeMode="NoResize"  WindowStartupLocation="CenterScreen">
+	<Grid>
+		<Grid.Background>
+			<ImageBrush ImageSource="/Leonardo_Phoenix_Create_a_visually_appealing_GuessMate_game_sc_1.jpg"/>
+		</Grid.Background>
+
+		<ListBox Name="FinalScoresList" HorizontalAlignment="Center" VerticalAlignment="Center" Width="343" Height="373">
+			<ListBox.Background>
+				<ImageBrush/>
+			</ListBox.Background>
+			<!-- Dynamic items will be added here -->
+		</ListBox>
+
+		<Button Name="ExitButton" Content="Exit Game" Width="120" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,595,0,0" Click="ExitButton_Click" Background="#FFADA08A" Foreground="#FF3C1B1A" FontSize="20" FontFamily="Script MT Bold"/>
+	</Grid>
+</Window>

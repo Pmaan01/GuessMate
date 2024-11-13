@@ -1,0 +1,55 @@
+﻿<Window x:Class="GuessMate.PlayGround"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PlayGround" Height="730" Width="630">
+    <Grid Margin="0,0,0,-6">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Leonardo_Phoenix_Create_a_stunning_game_background_image_that_0 (1).jpg"/>
+        </Grid.Background>
+
+        <!-- Player List -->
+        <ListBox Name="PlayersList" HorizontalAlignment="Left" VerticalAlignment="Top" Width="112" Height="107" Margin="10,10,0,0" RenderTransformOrigin="0.5,0.5" Background="#FF19161C">
+            <ListBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ListBox.RenderTransform>
+        </ListBox>
+
+        <!-- Hint Display -->
+        <TextBlock Name="HintTextBlock" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,230,0,0" FontSize="16" FontWeight="Bold" Foreground="Black"/>
+
+        <!-- Timer Display -->
+        <TextBlock Name="TimerDisplay" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" FontWeight="Bold" Foreground="Red" Margin="0,260,0,0"/>
+
+        <!-- Picture Display -->
+        <Image Name="PictureDisplay" HorizontalAlignment="Left" VerticalAlignment="Top" Width="131" Height="184" Margin="263,318,0,0" Source="/Screenshot 2024-11-11 203917.png">
+            <Image.OpacityMask>
+                <ImageBrush ImageSource="/Screenshot 2024-11-11 203917.png"/>
+            </Image.OpacityMask>
+        </Image>
+
+        <!-- MediaElement for Background Music -->
+        <MediaElement x:Name="BackgroundMusic" Source="C:\Users\gurwi\Downloads\swift-valkyrie-remastered-229741.mp3" 
+                     LoadedBehavior="Manual" UnloadedBehavior="Stop" Volume="0.5" Visibility="Hidden"></MediaElement>
+
+        <!-- Music Control Button -->
+        <Button x:Name="Music" Content="Turn Off Music" Width="150" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top"
+                Background="#FF222327" Foreground="White" FontWeight="Bold" FontSize="14" FontFamily="Ink Free" Click="TurnOffMusicButton_Click" Margin="480,0,0,0"/>
+
+        <!-- Answer Options (RadioButtons for Image Names) -->
+        <StackPanel Name="AnswerOptions" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,579,0,0" Visibility="Hidden">
+            <RadioButton Name="Option1" Content="Image 1" GroupName="ImageGroup" Click="OptionButton_Click" Width="250" Height="30"/>
+            <RadioButton Name="Option2" Content="Image 2" GroupName="ImageGroup" Click="OptionButton_Click" Width="250" Height="30"/>
+            <RadioButton Name="Option3" Content="Image 3" GroupName="ImageGroup" Click="OptionButton_Click" Width="250" Height="30"/>
+            <RadioButton Name="Option4" Content="Image 4" GroupName="ImageGroup" Click="OptionButton_Click" Width="250" Height="30"/>
+            <RadioButton Name="Option5" Content="Image 5" GroupName="ImageGroup" Click="OptionButton_Click" Width="250" Height="30"/>
+        </StackPanel>
+
+        <!-- Start Game Button -->
+        <Button Name="StartGameButton" Content="Start Game" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="35,0,0,46" Width="100" Height="30" Click="StartGameButton_Click"/>
+    </Grid>
+</Window>
