@@ -30,7 +30,7 @@
             Select Number of Players:
         </TextBlock>
 
-        <ComboBox x:Name="PlayerCountComboBox" Width="165" Height="23" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="450,654,0,0" RenderTransformOrigin="0.5,0.5" SelectionChanged="PlayerCountComboBox_SelectionChanged" Grid.ColumnSpan="2">
+        <ComboBox x:Name="PlayerCountComboBox" Width="165" Height="23" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="461,649,0,0" RenderTransformOrigin="0.5,0.5" SelectionChanged="PlayerCountComboBox_SelectionChanged" Grid.ColumnSpan="2">
             <ComboBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -47,7 +47,7 @@
         </ComboBox>
 
         <!-- Start Game Button -->
-        <Button Name="StartGameButton" Content="Start Game" Width="200" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="244,484,0,0" Click="StartGameButton_Click" FontSize="30" FontWeight="Bold" FontFamily="Matura MT Script Capitals" Grid.ColumnSpan="2">
+        <Button Name="StartGameButton" Content="Start Game" Width="200" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="245,469,0,0" Click="StartGameButton_Click" FontSize="30" FontWeight="Bold" FontFamily="Matura MT Script Capitals" Grid.ColumnSpan="2">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="1"/>
@@ -58,7 +58,7 @@
         </Button>
 
         <!-- Join Game Button -->
-        <Button Name="JoinGameButton" Content="Join Game" Width="200" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="245,549,0,0" Click="JoinGameButton_Click" FontSize="30" FontWeight="Bold" FontFamily="Matura MT Script Capitals" Visibility="Visible" Grid.ColumnSpan="2">
+        <Button Name="JoinGameButton" Content="Join Game" Width="200" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="245,524,0,0" Click="JoinGameButton_Click" FontSize="30" FontWeight="Bold" FontFamily="Matura MT Script Capitals" Visibility="Visible" Grid.ColumnSpan="2">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="1"/>
@@ -75,11 +75,12 @@
         </TextBlock>
 
         <!-- Music Toggle Button -->
-        <Button x:Name="Music" Content="Turn Off Music" Width="200" HorizontalAlignment="Left" Margin="250,604,0,89" Click="TurnOffMusicButton_Click" FontFamily="Lucida Handwriting" FontWeight="Bold" Grid.ColumnSpan="2">
+        <Button x:Name="Music" Content="Turn Off Music" Width="200" HorizontalAlignment="Left" Margin="245,579,0,92" FontSize="22" Click="TurnOffMusicButton_Click" FontFamily="Matura MT Script Capitals"  FontWeight="Bold" Grid.ColumnSpan="2" RenderTransformOrigin="0.493,0.624">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF2C294D"/>
-                    <GradientStop Color="#FF0B0A13" Offset="1"/>
+                    <GradientStop Color="Black" Offset="1"/>
+                    <GradientStop Color="#FFF3CCCC" Offset="0.037"/>
+                    <GradientStop Color="#FF413C72" Offset="0.085"/>
                 </LinearGradientBrush>
             </Button.Background>
         </Button>

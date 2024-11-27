@@ -7,16 +7,20 @@ using System.Collections.Generic;
 
 public class GameServer
 {
-    private TcpListener tcpListener;
+    public TcpListener tcpListener;
     private Thread listenerThread;
-    private string gameCode;
+    public string gameCode;
     private bool isGameStarted = false;
     private List<TcpClient> connectedClients;
     private readonly object clientLock = new object();
-    private int playerCount = 0; // Track the number of players connected
+    public int playerCount = 0; // Track the number of players connected
     private const int MaxPlayers = 4; // Maximum number of players allowed
-
-    public object GameCode { get; internal set; }
+    private const int MaxRounds = 5; // Total rounds
+    private const int GuessTimeLimit = 5; // Time limit for guessing in seconds
+    public int currentRound = 0; // Track the current round
+    private int currentPlayerIndex = 0; // Track whose turn it is
+    public event Action OnPlayerConnected;
+    public event Action OnAllPlayersConnected; // Event to notify when all players are connected
 
     public GameServer(string gameCode)
     {
@@ -30,7 +34,6 @@ public class GameServer
     {
         try
         {
-            // Reuse the address in case of a crashed server
             tcpListener.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             tcpListener.Start();
             listenerThread.Start();
@@ -42,13 +45,12 @@ public class GameServer
         }
     }
 
-    private void ListenForClients()
+    public void ListenForClients()
     {
         while (true)
         {
             try
             {
-                // Block until a client connects
                 TcpClient client = tcpListener.AcceptTcpClient();
                 lock (clientLock)
                 {
@@ -56,11 +58,14 @@ public class GameServer
                     playerCount++;
                 }
 
-                // Send game status to client (multiplayer or single-player)
+                // Notify new client of connection
                 NetworkStream networkStream = client.GetStream();
                 string playerMessage = playerCount == 1 ? "Single-player game. Waiting for opponent..." : "Multiplayer game. Ready to start!";
                 byte[] msg = Encoding.UTF8.GetBytes(playerMessage);
                 networkStream.Write(msg, 0, msg.Length);
+
+                // Notify that a player has connected
+                OnPlayerConnected?.Invoke();
 
                 Thread clientThread = new Thread(new ParameterizedThreadStart(HandleClientComm));
                 clientThread.Start(client);
@@ -72,7 +77,7 @@ public class GameServer
         }
     }
 
-    private void HandleClientComm(object obj)
+    public void HandleClientComm(object obj)
     {
         TcpClient tcpClient = (TcpClient)obj;
         NetworkStream networkStream = tcpClient.GetStream();
@@ -84,7 +89,6 @@ public class GameServer
         byte[] msg = Encoding.UTF8.GetBytes(initialMessage);
         networkStream.Write(msg, 0, msg.Length);
 
-        // Listen for client messages (game actions)
         try
         {
             while ((bytesRead = networkStream.Read(buffer, 0, buffer.Length)) != 0)
@@ -92,24 +96,11 @@ public class GameServer
                 string message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
                 Console.WriteLine("Received from client: " + message);
 
-                // Start the game logic when "StartGame" is received
-                if (message == "StartGame" && !isGameStarted)
+                if (message.StartsWith("StartGame") && !isGameStarted)
                 {
-                    // Start the game logic
                     isGameStarted = true;
+                    BroadcastMessage("Game started!");
 
-                    // Notify all clients that the game has started
-                    byte[] gameStartMessage = Encoding.UTF8.GetBytes("Game started!");
-                    lock (clientLock)
-                    {
-                        foreach (var client in connectedClients)
-                        {
-                            NetworkStream clientStream = client.GetStream();
-                            clientStream.Write(gameStartMessage, 0, gameStartMessage.Length);
-                        }
-                    }
-
-                    // If the player count is 1, start a single-player game
                     if (playerCount == 1)
                     {
                         StartSinglePlayerGame(tcpClient);
@@ -119,6 +110,13 @@ public class GameServer
                         StartMultiplayerGame();
                     }
                 }
+
+                // Handle theme selection
+                if (message.StartsWith("SelectTheme"))
+                {
+                    string selectedTheme = message.Substring("SelectTheme ".Length).Trim();
+                    BroadcastThemeToClients(selectedTheme);
+                }
             }
         }
         catch (Exception ex)
@@ -127,7 +125,6 @@ public class GameServer
         }
         finally
         {
-            // Cleanup after client disconnects
             tcpClient.Close();
             lock (clientLock)
             {
@@ -135,32 +132,85 @@ public class GameServer
                 playerCount--;
             }
             Console.WriteLine("Client disconnected.");
+            // Handle player disconnection logic if necessary
         }
     }
 
-    private void StartSinglePlayerGame(TcpClient client)
+    public void BroadcastThemeToClients(string theme)
     {
-        // Handle single-player game logic
-        Console.WriteLine("Starting single-player game with a computer opponent.");
-        // You can add more logic here for simulating a computer's turn, etc.
-        // Send message to client indicating single-player mode
-        byte[] message = Encoding.UTF8.GetBytes("Single-player mode started. Playing against the computer.");
-        NetworkStream networkStream = client.GetStream();
-        networkStream.Write(message, 0, message.Length);
-    }
-
-    private void StartMultiplayerGame()
-    {
-        // Handle multiplayer game logic
-        Console.WriteLine("Starting multiplayer game.");
-        // Send message to all connected clients that the game is starting
-        byte[] message = Encoding.UTF8.GetBytes("Multiplayer mode started. Let's play!");
+        byte[] themeMessage = Encoding.UTF8.GetBytes($"Selected theme: {theme}");
         lock (clientLock)
         {
             foreach (var client in connectedClients)
             {
                 NetworkStream clientStream = client.GetStream();
-                clientStream.Write(message, 0, message.Length);
+                clientStream.Write(themeMessage, 0, themeMessage.Length);
+            }
+        }
+    }
+
+    public void StartSinglePlayerGame(TcpClient client)
+    {
+        Console.WriteLine("Starting single-player game with a computer opponent.");
+        byte[] message = Encoding.UTF8.GetBytes("Single-player mode started. Playing against the computer.");
+        NetworkStream networkStream = client.GetStream();
+        networkStream.Write(message, 0, message.Length);
+    }
+
+    public void StartMultiplayerGame()
+    {
+        if (playerCount == MaxPlayers) // Check if max players are connected
+        {
+            isGameStarted = true;
+            BroadcastMessage("Multiplayer mode started. Let's play!");
+            OnAllPlayersConnected?.Invoke(); // Notify that all players are connected
+            StartRound();
+        }
+        else
+        {
+            BroadcastMessage($"Waiting for more players to join... {MaxPlayers - playerCount} spots left.");
+        }
+    }
+
+    public void StartRound()
+    {
+        if (currentRound < MaxRounds)
+        {
+            BroadcastMessage($"Round {currentRound + 1} has started! Player {connectedClients[currentPlayerIndex]} it's your turn to guess!");
+            Timer timer = new Timer(GuessTimeExpired, null, GuessTimeLimit * 1000, Timeout.Infinite);
+        }
+        else
+        {
+            EndGame();
+        }
+    }
+
+    public void GuessTimeExpired(object state)
+    {
+        BroadcastMessage("Time's up! Moving to the next player's turn.");
+        MoveToNextPlayer();
+    }
+
+    public void MoveToNextPlayer()
+    {
+        currentPlayerIndex = (currentPlayerIndex + 1) % playerCount;
+        StartRound();
+    }
+
+    public void EndGame()
+    {
+        BroadcastMessage("Game over! Thank you for playing!");
+    }
+
+    public void BroadcastMessage(string message)
+    {
+        byte[] msg = Encoding.UTF8.GetBytes(message);
+        lock (clientLock)
+        {
+            foreach (var client in connectedClients)
+            {
+                NetworkStream clientStream = client.GetStream();
+                clientStream.Write(msg, 0, msg.Length);
             }
         }
     }
@@ -169,16 +219,14 @@ public class GameServer
     {
         try
         {
-            tcpListener.Stop();  // Stop listening for new clients
+            tcpListener.Stop();
             lock (clientLock)
             {
                 foreach (var client in connectedClients)
                 {
-                    client.Close();  // Close each client's connection
+                    client.Close();
                 }
             }
-
-            // Optionally, you can also stop the listener thread if needed
             listenerThread.Abort();
             Console.WriteLine("Server stopped.");
         }

@@ -9,31 +9,31 @@ namespace GuessMate
     {
         private TcpClient tcpClient;
         private NetworkStream networkStream;
-        private string serverAddress = "127.0.0.1";  // Localhost for testing (change this to the actual server's IP address if needed)
+        private string serverAddress = "127.0.0.1";  // Localhost for testing
         private int serverPort = 8888;
+        public bool IsConnected { get; private set; } // Add this property
 
         public GameClient()
         {
             tcpClient = new TcpClient();
+            IsConnected = false; // Initialize as not connected
         }
-
         public void ConnectToServer(string gameCode)
         {
             try
             {
                 tcpClient.Connect(serverAddress, serverPort);
                 networkStream = tcpClient.GetStream();
+                IsConnected = true; // Set to true upon successful connection
 
                 // Send the game code to the server
                 string connectionMessage = $"Joining game with code: {gameCode}";
                 byte[] msg = Encoding.UTF8.GetBytes(connectionMessage);
                 networkStream.Write(msg, 0, msg.Length);
 
-                // Start reading messages from the server asynchronously
                 Thread readThread = new Thread(ReadServerMessages);
                 readThread.Start();
 
-                // Read the initial server response (for debugging or initial confirmation)
                 byte[] buffer = new byte[4096];
                 int bytesRead = networkStream.Read(buffer, 0, buffer.Length);
                 string serverResponse = Encoding.UTF8.GetString(buffer, 0, bytesRead);
@@ -42,11 +42,25 @@ namespace GuessMate
             catch (Exception ex)
             {
                 Console.WriteLine("Error connecting to server: " + ex.Message);
+                IsConnected = false; // Set to false if there's an error
             }
         }
 
-        // Method to handle asynchronous reading from the server
-        private void ReadServerMessages()
+        public void SelectTheme(string theme)
+        {
+            if (networkStream != null && tcpClient.Connected)
+            {
+                string message = $"SelectTheme {theme}";
+                byte[] msg = Encoding.UTF8.GetBytes(message);
+                networkStream.Write(msg, 0, msg.Length);
+            }
+            else
+            {
+                Console.WriteLine("No connection to the server.");
+            }
+        }
+
+        public void ReadServerMessages()
         {
             try
             {
@@ -58,12 +72,40 @@ namespace GuessMate
                     {
                         string serverMessage = Encoding.UTF8.GetString(buffer, 0, bytesRead);
                         Console.WriteLine("Server: " + serverMessage);
+
+                        // Corrected method call
+                        ProcessGameMessage(serverMessage);
                     }
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error reading from server: " + ex.Message);
+            }
+        }
+
+        private void ProcessGameMessage(string message)
+        {
+            if (message.StartsWith("Round"))
+            {
+                Console.WriteLine(message); // Notify the player about the round
+            }
+            else if (message.StartsWith("Time's up"))
+            {
+                Console.WriteLine(message); // Notify players that time is up
+            }
+            else if (message.StartsWith("Game over"))
+            {
+                Console.WriteLine(message); // Notify players that the game is over
+                CloseConnection(); // Optionally close the connection
+            }
+            else if (message.StartsWith("Selected theme:"))
+            {
+                Console.WriteLine(message); // Notify players about the selected theme
+            }
+            else if (message.StartsWith("You are not allowed to select the theme."))
+            {
+                Console.WriteLine(message); // Notify the player they cannot select the theme
             }
         }
 
@@ -82,15 +124,10 @@ namespace GuessMate
 
         public void CloseConnection()
         {
-            try
+            if (tcpClient != null)
             {
-                networkStream?.Close();
-                tcpClient?.Close();
+                tcpClient.Close();
                 Console.WriteLine("Connection closed.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error closing connection: " + ex.Message);
             }
         }
     }

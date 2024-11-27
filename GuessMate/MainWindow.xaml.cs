@@ -4,65 +4,67 @@ using System.Windows.Controls;
 using System.Configuration;
 using System.IO;
 
-
 namespace GuessMate
 {
     public partial class MainWindow : Window
     {
-        private GameServer gameServer;
+        public static GameServer gameServer;
         private GameClient gameClient;
         public static int _maxPlayers;
-        private GameSession _gameSession; 
-        private ImageLibrary _library;
+        private GameSession _gameSession;
         public static string gameCode;
         GameLobby gameLobby;
-
 
         public MainWindow()
         {
             InitializeComponent();
             BackgroundMusic.Play();
+            MusicState.IsMusicOn = true;
         }
+
         public static class MusicState
         {
-            public static bool IsMusicOn { get; set; } = true; // Default music state is on
+            public static bool IsMusicOn { get; set; }
         }
-     
 
         private void StartGameButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_maxPlayers == 1)
+            try
             {
-                _gameSession = new GameSession(GameMode.SinglePlayer); // For SinglePlayer mode
-                gameServer = new GameServer("SinglePlayer");
-                gameServer.StartServer();
+                if (_maxPlayers == 1)
+                {
+                    _gameSession = new GameSession(GameMode.SinglePlayer);
+                    gameServer = new GameServer("SinglePlayer");
+                    gameServer.StartServer();
 
-                MessageBox.Show("Game started in single-player mode.");
-                BackgroundMusic.Stop();
+                    MessageBox.Show("Game started in single-player mode.");
+                    BackgroundMusic.Stop();
 
-                // Open the GameLobby directly for single-player mode
-                gameLobby = new GameLobby(_gameSession, _maxPlayers);
-                gameLobby.Show();
-                this.Hide();
+                    gameLobby = new GameLobby(_gameSession, _maxPlayers, true, null); // No client needed for single-player
+                    gameLobby.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    gameCode = GenerateRandomCode();
+                    _gameSession = new GameSession(GameMode.MultiPlayer);
+                    gameServer = new GameServer(gameCode);
+                    gameServer.StartServer();
+
+                    MessageBox.Show($"Game started with code: {gameCode}. Share this code with your friends.");
+                    BackgroundMusic.Stop();
+
+                    gameLobby = new GameLobby(_gameSession, _maxPlayers, true, null); // Pass null for now
+                    gameLobby.Show();
+                    this.Hide();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // Generate a game code for multiplayer and display it
-                gameCode = GenerateRandomCode();
-                _gameSession = new GameSession(GameMode.MultiPlayer); // Set the mode to MultiPlayer
-                gameServer = new GameServer(gameCode);
-                gameServer.StartServer();
-
-                // Show the generated game code to the user for sharing
-                MessageBox.Show($"Game started with code: {gameCode}. Share this code with your friends.");
-                BackgroundMusic.Stop();
-                // Open the GameLobby window
-                gameLobby = new GameLobby(_gameSession, _maxPlayers);
-                gameLobby.Show();
-                this.Hide();
+                MessageBox.Show($"Error starting the game: {ex.Message}");
             }
         }
-    
+
         private void JoinGameButton_Click(object sender, RoutedEventArgs e)
         {
             CustomInputDialog inputDialog = new CustomInputDialog();
@@ -74,63 +76,74 @@ namespace GuessMate
 
                 // Create the game client and connect to the server
                 gameClient = new GameClient();
-                gameClient.ConnectToServer(gameCode);
-                gameClient.SendMessageToServer("StartGame");
+                gameClient.ConnectToServer(gameCode); // Connect to the server using the game code
 
-                _gameSession = new GameSession(GameMode.MultiPlayer); // Set to MultiPlayer mode
+                if (gameClient.IsConnected) // Check if the connection was successful
+                {
+                    _gameSession = new GameSession(GameMode.MultiPlayer); // Set to MultiPlayer mode
 
-
-                // Instantiate the GameLobby with paths and player count
-                gameLobby = new GameLobby(_gameSession, _maxPlayers);
-                gameLobby.Show();
-                gameLobby.Show();
-                this.Hide();
+                    // Pass the client to the GameLobby
+                    gameLobby = new GameLobby(_gameSession, _maxPlayers, false, gameClient); // Pass the client
+                    gameLobby.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to connect to the server. Please check the game code and try again.");
+                }
             }
             else if (_maxPlayers == 1)
             {
                 MessageBox.Show("Single-player mode does not require a game code. Please start a game instead.");
             }
         }
-
         private string GenerateRandomCode()
         {
             Random random = new Random();
             return random.Next(100000, 999999).ToString(); // Generate a random 6-digit number
         }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            // When the window is loaded, check the global music state and update accordingly
+            // Check the music state on window load
+            UpdateMusicState();
+        }
+        private void TurnOffMusicButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Toggle music state on button click
             if (MusicState.IsMusicOn)
             {
                 BackgroundMusic.Stop();
-                Music.Content = "Turn On Music";  // Ensure button text reflects the correct state
+                MusicState.IsMusicOn = false;
+                Music.Content = "Turn On Music";
             }
             else
             {
                 BackgroundMusic.Play();
-                Music.Content = "Turn Off Music";  // Ensure button text reflects the correct state
+                MusicState.IsMusicOn = true;
+                Music.Content = "Turn Off Music";
+            }
+
+            // Notify other windows about the change
+            if (gameLobby != null)
+            {
+                gameLobby.UpdateMusicState();
             }
         }
 
-        private void TurnOffMusicButton_Click(object sender, RoutedEventArgs e)
+        private void UpdateMusicState()
         {
-            // Check if the music is currently playing
-            if (Music.Content.ToString() == "Turn Off Music")
+            if (MusicState.IsMusicOn)
             {
-                // Stop the background music in the current window
-                BackgroundMusic.Stop();
-                MusicState.IsMusicOn = false; // Set music state to off
-                Music.Content = "Turn On Music"; // Change the button text
-            }
-            else if (Music.Content.ToString() == "Turn On Music")
-            {
-                // Play the background music in the current window
                 BackgroundMusic.Play();
-                MusicState.IsMusicOn = true; // Set music state to on
-                Music.Content = "Turn Off Music"; // Change the button text
+                Music.Content = "Turn Off Music";
+            }
+            else
+            {
+                BackgroundMusic.Stop();
+                Music.Content = "Turn On Music";
             }
         }
-
 
         private void PlayerCountComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -164,7 +177,7 @@ namespace GuessMate
                 }
             }
         }
-    
+
 
     }
 }

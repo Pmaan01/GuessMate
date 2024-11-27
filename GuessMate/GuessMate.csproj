@@ -9,17 +9,41 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="a.jpg" />
+    <None Remove="b.jpg" />
     <None Remove="Leonardo_Phoenix_A_captivating_image_for_the_GuessMate_game_ex_0.jpg" />
-    <None Remove="Leonardo_Phoenix_A_captivating_image_for_the_GuessMate_game_ex_1.jpg" />
     <None Remove="Leonardo_Phoenix_A_sleek_and_modern_game_lobby_illustration_fo_0.jpg" />
     <None Remove="Leonardo_Phoenix_A_sleek_and_modern_game_lobby_illustration_fo_2.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_an_ornate_intricate_design_for_the_bac_0.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_an_ornate_intricate_design_for_the_bac_2.jpg" />
     <None Remove="Leonardo_Phoenix_Create_a_beautifully_crafted_game_background_3.jpg" />
     <None Remove="Leonardo_Phoenix_Create_a_breathtaking_game_background_image_t_3.jpg" />
     <None Remove="Leonardo_Phoenix_Create_a_captivating_digital_game_background_3.jpg" />
     <None Remove="Leonardo_Phoenix_Create_a_captivating_game_background_with_an_1.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_hauntingly_atmospheric_game_backgrou_0.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_hauntingly_atmospheric_game_backgrou_1.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_hauntingly_beautiful_darktoned_and_e_0.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_hauntingly_beautiful_darktoned_and_e_1.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_hauntingly_beautiful_image_for_a_gue_0.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_hauntingly_beautiful_image_for_a_gue_2.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_hauntingly_suspenseful_background_im_0.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_hauntingly_suspenseful_background_im_1.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_hauntingly_suspenseful_background_im_3.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_hauntingly_suspenseful_digital_art_p_3.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_hauntingly_suspenseful_game_backgrou_0.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_hauntingly_suspenseful_game_backgrou_1.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_hauntingly_suspenseful_game_backgrou_2.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_hauntingly_suspenseful_game_backgrou_3.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_mesmerizing_game_background_with_a_p_0.jpg" />
     <None Remove="Leonardo_Phoenix_Create_a_stunning_game_background_image_that_0 %281%29.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_stunning_game_background_image_that_0 %282%29.jpg" />
     <None Remove="Leonardo_Phoenix_Create_a_stunning_game_background_image_that_0.jpg" />
     <None Remove="Leonardo_Phoenix_Create_a_stunning_game_background_image_that_1 %281%29.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_stunning_game_background_image_that_2.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_stunning_game_background_image_that_3.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_stylish_mysterious_image_with_a_dark_3.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_stylized_and_enigmatic_game_backgrou_1.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_stylized_and_enigmatic_game_backgrou_2.jpg" />
     <None Remove="Leonardo_Phoenix_Create_a_visually_appealing_game_background_w_0.jpg" />
     <None Remove="Leonardo_Phoenix_Create_a_visually_appealing_game_background_w_1.jpg" />
     <None Remove="Leonardo_Phoenix_Create_a_visually_appealing_game_background_w_3.jpg" />
@@ -30,35 +54,28 @@
     <None Remove="Leonardo_Phoenix_generate_image_for_game_background_should_be_1 %281%29.jpg" />
     <None Remove="Leonardo_Phoenix_generate_image_for_game_background_should_be_1.jpg" />
     <None Remove="Screenshot 2024-11-11 203917.png" />
+    <None Remove="Screenshot 2024-11-23 202647.png" />
+    <None Remove="Screenshot 2024-11-24 144959.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.CodeCoverage" Version="17.12.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.6.3" />
+    <PackageReference Include="NUnit" Version="4.2.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.10" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="a.jpg" />
     <Resource Include="Leonardo_Phoenix_A_captivating_image_for_the_GuessMate_game_ex_0.jpg" />
-    <Resource Include="Leonardo_Phoenix_A_captivating_image_for_the_GuessMate_game_ex_1.jpg" />
-    <Resource Include="Leonardo_Phoenix_A_sleek_and_modern_game_lobby_illustration_fo_0.jpg" />
-    <Resource Include="Leonardo_Phoenix_A_sleek_and_modern_game_lobby_illustration_fo_2.jpg" />
-    <Resource Include="Leonardo_Phoenix_Create_a_beautifully_crafted_game_background_3.jpg" />
-    <Resource Include="Leonardo_Phoenix_Create_a_breathtaking_game_background_image_t_3.jpg" />
-    <Resource Include="Leonardo_Phoenix_Create_a_captivating_digital_game_background_3.jpg" />
-    <Resource Include="Leonardo_Phoenix_Create_a_captivating_game_background_with_an_1.jpg" />
-    <Resource Include="Leonardo_Phoenix_Create_a_stunning_game_background_image_that_0 (1).jpg" />
-    <Resource Include="Leonardo_Phoenix_Create_a_stunning_game_background_image_that_0.jpg" />
-    <Resource Include="Leonardo_Phoenix_Create_a_stunning_game_background_image_that_1 (1).jpg" />
-    <Resource Include="Leonardo_Phoenix_Create_a_visually_appealing_game_background_w_0.jpg" />
+    <Resource Include="Leonardo_Phoenix_Create_a_hauntingly_atmospheric_game_backgrou_1.jpg" />
+    <Resource Include="Leonardo_Phoenix_Create_a_hauntingly_suspenseful_background_im_3.jpg" />
+    <Resource Include="Leonardo_Phoenix_Create_a_hauntingly_suspenseful_game_backgrou_2.jpg" />
     <Resource Include="Leonardo_Phoenix_Create_a_visually_appealing_game_background_w_1.jpg" />
-    <Resource Include="Leonardo_Phoenix_Create_a_visually_appealing_game_background_w_3.jpg" />
     <Resource Include="Leonardo_Phoenix_Create_a_visually_appealing_GuessMate_game_sc_1.jpg" />
-    <Resource Include="Leonardo_Phoenix_Create_a_visually_appealing_GuessMate_game_sc_2.jpg" />
-    <Resource Include="Leonardo_Phoenix_generate_image_for_game_background_should_be_0 (1).jpg" />
-    <Resource Include="Leonardo_Phoenix_generate_image_for_game_background_should_be_0.jpg" />
-    <Resource Include="Leonardo_Phoenix_generate_image_for_game_background_should_be_1 (1).jpg" />
-    <Resource Include="Leonardo_Phoenix_generate_image_for_game_background_should_be_1.jpg" />
-    <Resource Include="Screenshot 2024-11-11 203917.png" />
   </ItemGroup>
 
 </Project>

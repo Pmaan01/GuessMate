@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using Microsoft.Win32;
 using System.Windows.Media.Imaging;
 using System.IO;
+using static GuessMate.MainWindow;
 
 namespace GuessMate
 {
@@ -14,6 +15,7 @@ namespace GuessMate
         private const int MaxImages = 5;
         private List<ImageUploadData> _imageUploadData;
         private readonly GameSession _gameSession;
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -30,9 +32,9 @@ namespace GuessMate
         public PlayerTurn(GameSession gameSession)
         {
             InitializeComponent();
-            BackgroundMusic.Play();
+            UpdateMusicState();
 
-            _gameSession = gameSession;
+              _gameSession = gameSession;
             InitializeImageUploadData();
             DataContext = this; // Set DataContext for binding
         }
@@ -122,26 +124,75 @@ namespace GuessMate
                         // Convert the image to a byte array
                         byte[] imageBytes = ConvertImageToByteArray(data.ImagePreview);
 
-                        // Add the image data to the list
+                        // Add the image data to the list (including ImagePath)
                         images.Add(new ImageData(data.ImageData.ImagePath, data.ImageData.Hint, data.ImageData.ImageName));
 
                         // Save image to database using PlayerImageDatabaseHelper
                         PlayerImageDatabaseHelper databaseHelper = new PlayerImageDatabaseHelper();
-                        databaseHelper.SavePlayerImage(_gameSession.CurrentPlayer.Name, data.ImageData.ImageName, data.ImageData.Hint, imageBytes);
+                        databaseHelper.SavePlayerImage(
+                            GameLobby.playerName,
+                            data.ImageData.ImageName,
+                            data.ImageData.Hint,
+                            imageBytes,
+                            data.ImageData.ImagePath // Save the ImagePath as well
+                        );
                     }
                 }
 
                 // Set the round details
                 int roundNumber = 1;
-                _gameSession.SetRoundDetails(roundNumber, images);
 
-                OpenPlayGroundWindow();
+                // Check if the game has a PC player (e.g., "PC" as player name)
+                bool isSinglePlayer = GameSession.Players.Any(player => player.Name == "PC");
+
+                if (isSinglePlayer)
+                {
+                    // Open the PlaygroundSinglePlayer window
+                    OpenPlayGroundWindow();
+                }
+                else
+                {
+                    // Open the PlaygroundMultiplayer window
+                    OpenPlayGroundMultiplayerWindow();
+                }
             }
             else
             {
                 MessageBox.Show("Please fill in the name, hint, and upload an image for all images.");
             }
         }
+
+        private void OpenPlayGroundWindow()
+        {
+            // Create an instance of the Playground window for single-player (against PC)
+            PlayGround playGroundWindow = new PlayGround(_gameSession);
+
+            // Show the PlayGround window
+            playGroundWindow.Show();
+
+            // Close the current window (PlayerTurn) if it's no longer needed
+            this.Close();
+        }
+        private void OpenPlayGroundMultiplayerWindow()
+        {
+            // Ensure that MainWindow.gameServer is not null before creating the instance
+            if (MainWindow.gameServer == null)
+            {
+                MessageBox.Show("Game server is not initialized.");
+                return;
+            }
+
+            // Create an instance of the PlaygroundMultiplayer window for multiplayer
+            PlayGroundMultiplayer playGroundMultiplayerWindow = new PlayGroundMultiplayer(_gameSession, MainWindow.gameServer);
+
+            // Show the PlaygroundMultiplayer window
+            playGroundMultiplayerWindow.Show();
+
+            // Close the current window (PlayerTurn) if it's no longer needed
+            this.Close();
+        }
+
+
 
         private byte[] ConvertImageToByteArray(BitmapImage bitmapImage)
         {
@@ -165,26 +216,32 @@ namespace GuessMate
             if (Music.Content.ToString() == "Turn Off Music")
             {
                 BackgroundMusic.Stop();
-                Music.Content = "Turn On Music";
+                MusicState.IsMusicOn = false;
+
+                Music.Content = "Turn On Music"; // Change the button text
+
             }
             else if (Music.Content.ToString() == "Turn On Music")
             {
                 BackgroundMusic.Play();
+                MusicState.IsMusicOn = true;
                 Music.Content = "Turn Off Music";
             }
         }
-
-        private void OpenPlayGroundWindow()
+        public void UpdateMusicState()
         {
-            // Create an instance of the PlayGround window
-            PlayGround playGroundWindow = new PlayGround(_gameSession);
-
-            // Show the PlayGround window
-            playGroundWindow.Show();
-
-            // Close the current window (PlayerTurn) if it's no longer needed
-            this.Close();
+            if (MainWindow.MusicState.IsMusicOn)
+            {
+                BackgroundMusic.Play();
+                Music.Content = "Turn Off Music";
+            }
+            else
+            {
+                BackgroundMusic.Stop();
+                Music.Content = "Turn On Music";
+            }
         }
+
 
         protected void OnPropertyChanged(string propertyName)
         {

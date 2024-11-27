@@ -1,42 +1,45 @@
 ﻿<Window x:Class="GuessMate.CustomInputDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Join Game" Height="200" Width="400"
+        Title="Join Game" Height="192" Width="416"
         WindowStartupLocation= "CenterScreen"
         ResizeMode="NoResize">
-    <Window.Background>
-        <ImageBrush ImageSource="/Leonardo_Phoenix_A_captivating_image_for_the_GuessMate_game_ex_1.jpg"/>
-    </Window.Background>
 
-    <Grid Margin="10,10,0,4">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
 
-        <!-- Instruction Label -->
-        <Label Content="Enter the game code provided by your friend:"
+	<Grid Margin="-8,0,0,-6">
+		<Grid.Background>
+			<ImageBrush ImageSource="/Leonardo_Phoenix_A_captivating_image_for_the_GuessMate_game_ex_0.jpg"/>
+		</Grid.Background>
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="0"/>
+			<RowDefinition Height="157.807"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+
+		<!-- Instruction Label -->
+		<Label Content="Enter the game code provided by your friend:"
                HorizontalAlignment="Center"
                Foreground="White"
                FontWeight="Bold"
-               FontFamily="Ink Free" FontSize="16" Margin="0,10,0,124" Grid.RowSpan="2"/>
+               FontFamily="Ink Free" FontSize="16" Margin="0,34,0,85" Grid.Row="2" Width="324"/>
 
-        <!-- Input TextBox -->
-        <TextBox x:Name="InputTextBox"
-                 Grid.Row="1"
-                 VerticalAlignment="Center"
+		<!-- Input TextBox -->
+		<TextBox x:Name="InputTextBox"
+                 Grid.Row="2"
+                 VerticalAlignment="Top"
                  Background="White"
                  Foreground="Black"
-                FontFamily="Ink Free" FontSize="16" FontWeight="Bold" Height="26" Margin="40,0,28,0" RenderTransformOrigin="0.497,0.58"/>
+                FontFamily="Ink Free" FontSize="16" FontWeight="Bold" Height="26" Margin="34,78,34,0" RenderTransformOrigin="0.497,0.58"/>
 
-        <!-- Submit Button -->
-        <Button Content="Submit"
-                Grid.Row="1"
+		<!-- Submit Button -->
+		<Button Content="Submit"
+                Grid.Row="2"
                 Width="100"
                 HorizontalAlignment="Center"
                 Background="#FF13182A"
                 Foreground="White"
-                Click="SubmitButton_Click" FontFamily="Ink Free" FontWeight="Bold" Margin="0,112,0,20"/>
-    </Grid>
+                Click="SubmitButton_Click" FontFamily="Ink Free" FontWeight="Bold" Margin="0,113,0,10"/>
+	</Grid>
 </Window>
