@@ -1,8 +1,7 @@
-﻿using GuessMate;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
 using System.Net;
 using System.Text;
-
+using GuessMte
 public class GameServer : IGameServer
 {
     private static Dictionary<string, GameServer> activeServers = new Dictionary<string, GameServer>();
@@ -22,7 +21,7 @@ public class GameServer : IGameServer
     public event Action OnAllPlayersConnected;
     private Dictionary<string, List<byte[]>> playerImages = new Dictionary<string, List<byte[]>>();
 
-    public GameSession GameSession { get; private set; } // Add GameSession property
+    public GuessMate.GameSession GameSession { get; private set; } // Add GameSession property
     public string SelectedTheme { get; private set; }
     IPAddress localIP;
 
