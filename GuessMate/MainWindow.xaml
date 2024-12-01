@@ -57,6 +57,8 @@
             </Button.Background>
         </Button>
 
+
+
         <!-- Join Game Button -->
         <Button Name="JoinGameButton" Content="Join Game" Width="200" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="245,524,0,0" Click="JoinGameButton_Click" FontSize="30" FontWeight="Bold" FontFamily="Matura MT Script Capitals" Visibility="Visible" Grid.ColumnSpan="2">
             <Button.Background>

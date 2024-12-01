@@ -1,30 +1,39 @@
-﻿using static GuessMate.MainWindow;
+﻿using GuessMate;
+using static GuessMate.MainWindow;
 using System.Windows.Controls;
 using System.Windows;
-
 namespace GuessMate
 {
     public partial class GameLobby : Window
     {
         private readonly GameSession _gameSession;
-        private readonly bool _isHost; // To check if the current player is the host
+        private readonly bool _isHost;
         public static int _playerCount;
         public static string playerName;
         public static string category;
 
         private GameClient _gameClient;
-        public GameLobby(GameSession gameSession, int maxPlayers, bool isHost, GameClient gameClient)
+        private GameServer _gameServer; // Add this line
+
+        public GameLobby(GameSession gameSession, int maxPlayers, bool isHost, GameClient gameClient, GameServer gameServer = null)
         {
             InitializeComponent();
             UpdateMusicState();
+            _gameServer = gameServer;
             _gameClient = gameClient; // Assign the GameClient instance
             _gameSession = gameSession;
             _playerCount = maxPlayers;
             _isHost = isHost; // Set the host status
-            string playerCodeInput = Code.Text; // 
-            _gameSession.PlayerCode = playerCodeInput; // Store the player's code
-            UpdateCodeTextBlock(); // Update the TextBlock content
 
+            if (_gameServer != null)
+            {
+                _gameServer.gameCode = Code.Text; // Set the game code
+                UpdateCodeTextBlock(); // Update the TextBlock content
+            }
+            else
+            {
+                MessageBox.Show("Game server is not initialized.");
+            }
 
             // If playing with PC, add PC as the second player
             if (_playerCount == 1)
@@ -38,7 +47,7 @@ namespace GuessMate
                 // Add other players to the session
                 for (int i = 2; i <= MainWindow._maxPlayers; i++)
                 {
-                    _gameSession.AddPlayer(new Player($"Player {i}"));
+                    gameSession.AddPlayer(new Player($"Player {i}"));
                     _playerCount++;
                 }
                 Code.Visibility = Visibility.Visible;
@@ -49,12 +58,26 @@ namespace GuessMate
             ThemeButton.Visibility = _isHost ? Visibility.Visible : Visibility.Hidden;
             GameModeComboBox.Visibility = _isHost ? Visibility.Visible : Visibility.Hidden;
             GameModeComboBox.IsEnabled = _isHost; // Disable if not host
+
+            // If not the host, hide the theme selection button and disable the GameModeComboBox
+            if (!_isHost)
+            {
+                ThemeButton.Visibility = Visibility.Hidden;
+                GameModeComboBox.IsEnabled = false;
+            }
         }
 
         private void UpdateCodeTextBlock()
         {
-            // Update the TextBlock to show the player's code and selected theme
-            Code.Text = $"Code: {_gameSession.PlayerCode}\nTheme: {_gameSession.SelectedTheme}";
+            // Ensure _gameServer is not null before accessing its properties
+            if (_gameServer != null)
+            {
+                Code.Text = $"Code: {_gameServer.gameCode}\nTheme: {_gameServer.SelectedTheme}";
+            }
+            else
+            {
+                Code.Text = "Game server is not available.";
+            }
         }
         private void StartGameButton_Click(object sender, RoutedEventArgs e)
         {
@@ -68,26 +91,28 @@ namespace GuessMate
 
                 if (GameModeComboBox.SelectedItem is ComboBoxItem selectedItem)
                 {
-                    // Host logic...
-                
-                category = selectedItem.Content.ToString();
-                    _gameSession.SelectedTheme = category; // Store the selected theme in the game session
+                    category = selectedItem.Content.ToString();
+                    _gameServer.SetTheme(category); // Set the theme on the server
                     UpdateCodeTextBlock();
 
+                    // Notify other players about the selected theme
+                    MessageBox.Show($"Theme '{category}' selected by the host.");
                 }
                 else
                 {
                     category = "Random";
                     _gameSession.SelectedTheme = category; // Store the random selection
-                }
+                    _gameServer.SetTheme(category);
+                    UpdateCodeTextBlock();
 
-                // Notify other players about the selected theme
-                MessageBox.Show($"Theme '{category}' selected by the host.");
+                    // Notify other players about the selected theme
+                    MessageBox.Show($"Theme '{category}' selected by the host.");
+                }
             }
             else
             {
                 // Retrieve the currently selected theme set by the host
-                string currentTheme = _gameSession.SelectedTheme; // Assuming this property holds the host's selected theme
+                string currentTheme = _gameServer.SelectedTheme ?? "No theme selected"; // Use the server's selected theme
                 MessageBox.Show($"The selected theme by host is: {currentTheme}");
             }
 
@@ -113,7 +138,13 @@ namespace GuessMate
                 // Add the human player (yourself) to the session
                 _gameSession.AddPlayer(new Player(playerName));
 
-                PlayerTurn playerTurnWindow = new PlayerTurn(_gameSession);
+                // Set the theme on the server if the host
+                if (_isHost)
+                {
+                    _gameServer.SetTheme(category);
+                }
+
+                PlayerTurn playerTurnWindow = new PlayerTurn(_gameSession, _gameClient, _gameServer);
                 playerTurnWindow.Show();
 
                 // Close the current lobby window
@@ -164,5 +195,8 @@ namespace GuessMate
         {
             MessageBox.Show("Error playing music.");
         }
+
+
+
     }
-}
+} 

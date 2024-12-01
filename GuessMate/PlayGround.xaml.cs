@@ -63,12 +63,12 @@ namespace GuessMate
             // Show the FinalScores window
             finalScoresWindow.Show();
 
-           
+
         }
 
         private void PlayGround_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-           
+
 
             foreach (var player in players)
             {
@@ -285,8 +285,9 @@ namespace GuessMate
                     FontSize = 16,
                     FontFamily = new FontFamily("Ink Free"),
                     Background = new SolidColorBrush(Colors.Black),
-                    Width = 80, Height =20
-                    
+                    Width = 80,
+                    Height = 20
+
                 };
 
 

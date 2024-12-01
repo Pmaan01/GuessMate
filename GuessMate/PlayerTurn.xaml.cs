@@ -15,6 +15,8 @@ namespace GuessMate
         private const int MaxImages = 5;
         private List<ImageUploadData> _imageUploadData;
         private readonly GameSession _gameSession;
+        private readonly GameClient _gameClient;
+        private readonly GameServer _gameServer;
 
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -29,8 +31,11 @@ namespace GuessMate
             }
         }
 
-        public PlayerTurn(GameSession gameSession)
+        public PlayerTurn(GameSession gameSession, GameClient gameClient, GameServer gameServer = null)
         {
+           
+            _gameClient = gameClient;
+            _gameServer = gameServer;
             InitializeComponent();
             UpdateMusicState();
 
@@ -183,8 +188,7 @@ namespace GuessMate
             }
 
             // Create an instance of the PlaygroundMultiplayer window for multiplayer
-            PlayGroundMultiplayer playGroundMultiplayerWindow = new PlayGroundMultiplayer(_gameSession, MainWindow.gameServer);
-
+            PlayGroundMultiplayer playGroundMultiplayerWindow = new PlayGroundMultiplayer(MainWindow.gameCode, _gameClient, MainWindow.gameServer);
             // Show the PlaygroundMultiplayer window
             playGroundMultiplayerWindow.Show();
 

@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuessMate", "GuessMate\GuessMate.csproj", "{EC70BB56-33F9-4D71-9118-11D9B64B8F5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GusseMate.Tests", "GusseMate.Tests\GusseMate.Tests.csproj", "{5CB2B0C4-D03C-4633-8464-63639724E2DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GusseMate.Tests", "GusseMate.Tests\GusseMate.Tests.csproj", "{5CB2B0C4-D03C-4633-8464-63639724E2DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

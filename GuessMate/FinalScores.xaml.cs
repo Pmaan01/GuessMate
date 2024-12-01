@@ -93,10 +93,10 @@ namespace GuessMate
         private void PlayAgainButton_Click(object sender, RoutedEventArgs e)
         {
             // Create a new instance of MainWindow
-            MainWindow mainWindow = new MainWindow();
+           // MainWindow mainWindow = new MainWindow();
 
             // Show the MainWindow
-            mainWindow.Show();
+            //mainWindow.Show();
 
             // Close the FinalScores window
             this.Close();

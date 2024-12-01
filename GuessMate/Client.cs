@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Windows;
 
 namespace GuessMate
 {
@@ -18,41 +20,52 @@ namespace GuessMate
             tcpClient = new TcpClient();
             IsConnected = false; // Initialize as not connected
         }
-        public void ConnectToServer(string gameCode)
+
+       public void ConnectToServer(string gameCode)
+    {
+        try
         {
-            try
-            {
-                tcpClient.Connect(serverAddress, serverPort);
-                networkStream = tcpClient.GetStream();
-                IsConnected = true; // Set to true upon successful connection
+            string serverAddress = "127.0.0.1"; // or use "localhost"
+            int serverPort = 8080; // Ensure this matches the server's listening port
 
-                // Send the game code to the server
-                string connectionMessage = $"Joining game with code: {gameCode}";
-                byte[] msg = Encoding.UTF8.GetBytes(connectionMessage);
-                networkStream.Write(msg, 0, msg.Length);
+            tcpClient.Connect(serverAddress, serverPort);
+            networkStream = tcpClient.GetStream();
+            IsConnected = true;
 
-                Thread readThread = new Thread(ReadServerMessages);
-                readThread.Start();
+            // Send the game code to the server
+            string connectionMessage = $"Joining game with code: {gameCode}";
+            byte[] msg = Encoding.UTF8.GetBytes(connectionMessage);
+            networkStream.Write(msg, 0, msg.Length);
 
-                byte[] buffer = new byte[4096];
-                int bytesRead = networkStream.Read(buffer, 0, buffer.Length);
-                string serverResponse = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                Console.WriteLine("Server says: " + serverResponse);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error connecting to server: " + ex.Message);
-                IsConnected = false; // Set to false if there's an error
-            }
+            // Start reading messages from the server
+            Thread readThread = new Thread(ReadServerMessages);
+            readThread.Start();
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error connecting to server: " + ex.Message);
+            IsConnected = false;
+        }
+    }
 
-        public void SelectTheme(string theme)
+
+        public void UploadImages(string[] imagePaths)
         {
             if (networkStream != null && tcpClient.Connected)
             {
-                string message = $"SelectTheme {theme}";
-                byte[] msg = Encoding.UTF8.GetBytes(message);
-                networkStream.Write(msg, 0, msg.Length);
+                foreach (var path in imagePaths)
+                {
+                    if (File.Exists(path))
+                    {
+                        string message = $"UploadImage {Path.GetFileName(path)}";
+                        byte[] msg = Encoding.UTF8.GetBytes(message);
+                        networkStream.Write(msg, 0, msg.Length);
+
+                        // Send the image bytes
+                        byte[] imageBytes = File.ReadAllBytes(path);
+                        networkStream.Write(imageBytes, 0, imageBytes.Length);
+                    }
+                }
             }
             else
             {
@@ -73,7 +86,6 @@ namespace GuessMate
                         string serverMessage = Encoding.UTF8.GetString(buffer, 0, bytesRead);
                         Console.WriteLine("Server: " + serverMessage);
 
-                        // Corrected method call
                         ProcessGameMessage(serverMessage);
                     }
                 }
@@ -83,7 +95,21 @@ namespace GuessMate
                 Console.WriteLine("Error reading from server: " + ex.Message);
             }
         }
+        public void SendThemeUpdate(string theme)
+        {
+            // Logic to update the UI with the new theme
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                // Assuming you have a method to update the theme in the UI
+                UpdateThemeInUI(theme);
+            });
+        }
 
+        private void UpdateThemeInUI(string theme)
+        {
+            // Logic to update the UI with the new theme
+            MessageBox.Show($"The selected theme is: {theme}");
+        }
         private void ProcessGameMessage(string message)
         {
             if (message.StartsWith("Round"))
@@ -131,4 +157,5 @@ namespace GuessMate
             }
         }
     }
+    
 }

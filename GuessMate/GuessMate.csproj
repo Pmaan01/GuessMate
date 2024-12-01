@@ -60,6 +60,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeCoverage" Version="17.12.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="MSTest.TestFramework" Version="3.6.3" />
     <PackageReference Include="NUnit" Version="4.2.2" />
@@ -76,6 +77,10 @@
     <Resource Include="Leonardo_Phoenix_Create_a_hauntingly_suspenseful_game_backgrou_2.jpg" />
     <Resource Include="Leonardo_Phoenix_Create_a_visually_appealing_game_background_w_1.jpg" />
     <Resource Include="Leonardo_Phoenix_Create_a_visually_appealing_GuessMate_game_sc_1.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

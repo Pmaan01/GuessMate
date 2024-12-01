@@ -55,6 +55,12 @@ namespace GuessMate
                 CurrentGameState = GameState.InProgress;
             }
         }
+        public GameSession()
+        {
+           
+            SelectedTheme = string.Empty;
+        }
+
 
         // Get the current player
         public Player CurrentPlayer
@@ -66,6 +72,7 @@ namespace GuessMate
                 return Players[CurrentTurnIndex];
             }
         }
+
 
         // Save images to the database
         public void SaveImagesToDatabase(string folderPath, string category)

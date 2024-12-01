@@ -55,6 +55,7 @@
                 </LinearGradientBrush>
             </Button.OpacityMask>
         </Button>
+        
 
         <MediaElement x:Name="BackgroundMusic" 
              Source="C:\Users\gurwi\Downloads\a-druidesa-171837.mp3" 
@@ -66,4 +67,5 @@
              Visibility="Hidden"
              MediaFailed="BackgroundMusic_MediaFailed"/>
     </Grid>
+    
 </Window>

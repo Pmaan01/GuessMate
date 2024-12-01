@@ -26,7 +26,7 @@
         <TextBlock Name="HintTextBlock" Width="269" Height="138" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="286,749,0,0" FontSize="24" FontFamily="Ink Free" Foreground="Beige" FontWeight="Bold" TextWrapping="Wrap"/>
         <Label Name="Round" Content="Round: 1 out of 5" FontSize="16" Foreground="Beige" Margin="10,7,403,811" FontFamily="Ink Free" FontWeight="Bold"/>
         <!-- Timer Display -->
-        <TextBlock Name="TimerDisplay" Width="229" Height="52" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24" FontWeight="Bold" Foreground="Beige" Margin="434,462,0,0" FontFamily="Ink Free"/>
+        <TextBlock Name="TimerDisplay" Width="229" Height="52" Visibility="Hidden" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24" FontWeight="Bold" Foreground="Beige" Margin="434,462,0,0" FontFamily="Ink Free"/>
         <TextBlock Name="textBlockWaitingForPlayers" Width="241" Height="47" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="415,562,0,0" FontSize="24" Foreground="Beige" Visibility="Visible" FontFamily="Ink Free" FontWeight="Bold"/>
         <Label Name="Turn" Width="254" Height="35" FontSize="20" FontFamily="ink Free" Foreground="Beige" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,574,0,0" Content="Current Player: " FontWeight="Bold" />
         <Image Name="PictureDisplay" HorizontalAlignment="Center" VerticalAlignment="Top" Width="103" Height="149" Margin="0,511,0,0" RenderTransformOrigin="0.5,0.5" Source="/b.jpg">
