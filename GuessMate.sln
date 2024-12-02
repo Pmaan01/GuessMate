@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuessMate", "GuessMate\Gues
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GusseMate.Tests", "GusseMate.Tests\GusseMate.Tests.csproj", "{5CB2B0C4-D03C-4633-8464-63639724E2DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerSide", "ServerSide\ServerSide.csproj", "{3EB8EC36-47E4-4A35-BD65-BC4972BC581D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5CB2B0C4-D03C-4633-8464-63639724E2DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CB2B0C4-D03C-4633-8464-63639724E2DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CB2B0C4-D03C-4633-8464-63639724E2DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EB8EC36-47E4-4A35-BD65-BC4972BC581D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EB8EC36-47E4-4A35-BD65-BC4972BC581D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EB8EC36-47E4-4A35-BD65-BC4972BC581D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EB8EC36-47E4-4A35-BD65-BC4972BC581D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

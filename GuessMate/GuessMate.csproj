@@ -9,8 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="a %282%29.jpg" />
+    <None Remove="a .jpg" />
     <None Remove="a.jpg" />
     <None Remove="b.jpg" />
+    <None Remove="d.jpg" />
     <None Remove="Leonardo_Phoenix_A_captivating_image_for_the_GuessMate_game_ex_0.jpg" />
     <None Remove="Leonardo_Phoenix_A_sleek_and_modern_game_lobby_illustration_fo_0.jpg" />
     <None Remove="Leonardo_Phoenix_A_sleek_and_modern_game_lobby_illustration_fo_2.jpg" />
@@ -35,6 +38,8 @@
     <None Remove="Leonardo_Phoenix_Create_a_hauntingly_suspenseful_game_backgrou_2.jpg" />
     <None Remove="Leonardo_Phoenix_Create_a_hauntingly_suspenseful_game_backgrou_3.jpg" />
     <None Remove="Leonardo_Phoenix_Create_a_mesmerizing_game_background_with_a_p_0.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_mysterious_and_beautiful_image_for_t_0 %281%29.jpg" />
+    <None Remove="Leonardo_Phoenix_Create_a_mysterious_and_beautiful_image_for_t_3.jpg" />
     <None Remove="Leonardo_Phoenix_Create_a_stunning_game_background_image_that_0 %281%29.jpg" />
     <None Remove="Leonardo_Phoenix_Create_a_stunning_game_background_image_that_0 %282%29.jpg" />
     <None Remove="Leonardo_Phoenix_Create_a_stunning_game_background_image_that_0.jpg" />
@@ -49,10 +54,13 @@
     <None Remove="Leonardo_Phoenix_Create_a_visually_appealing_game_background_w_3.jpg" />
     <None Remove="Leonardo_Phoenix_Create_a_visually_appealing_GuessMate_game_sc_1.jpg" />
     <None Remove="Leonardo_Phoenix_Create_a_visually_appealing_GuessMate_game_sc_2.jpg" />
+    <None Remove="Leonardo_Phoenix_Genearte_a_image_for_the_background_keep_it_d_0.jpg" />
     <None Remove="Leonardo_Phoenix_generate_image_for_game_background_should_be_0 %281%29.jpg" />
     <None Remove="Leonardo_Phoenix_generate_image_for_game_background_should_be_0.jpg" />
     <None Remove="Leonardo_Phoenix_generate_image_for_game_background_should_be_1 %281%29.jpg" />
     <None Remove="Leonardo_Phoenix_generate_image_for_game_background_should_be_1.jpg" />
+    <None Remove="Leonardo_Phoenix_updatedpromptCreate_a_hauntingly_beautiful_da_0 %281%29.jpg" />
+    <None Remove="Leonardo_Phoenix_updatedpromptCreate_a_hauntingly_beautiful_da_1.jpg" />
     <None Remove="Screenshot 2024-11-11 203917.png" />
     <None Remove="Screenshot 2024-11-23 202647.png" />
     <None Remove="Screenshot 2024-11-24 144959.png" />
@@ -63,6 +71,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="MSTest.TestFramework" Version="3.6.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NUnit" Version="4.2.2" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
@@ -70,17 +79,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="a.jpg" />
+    <Resource Include="d.jpg" />
     <Resource Include="Leonardo_Phoenix_A_captivating_image_for_the_GuessMate_game_ex_0.jpg" />
-    <Resource Include="Leonardo_Phoenix_Create_a_hauntingly_atmospheric_game_backgrou_1.jpg" />
     <Resource Include="Leonardo_Phoenix_Create_a_hauntingly_suspenseful_background_im_3.jpg" />
     <Resource Include="Leonardo_Phoenix_Create_a_hauntingly_suspenseful_game_backgrou_2.jpg" />
+    <Resource Include="Leonardo_Phoenix_Create_a_mysterious_and_beautiful_image_for_t_0 (1).jpg" />
+    <Resource Include="Leonardo_Phoenix_Create_a_mysterious_and_beautiful_image_for_t_3.jpg" />
     <Resource Include="Leonardo_Phoenix_Create_a_visually_appealing_game_background_w_1.jpg" />
     <Resource Include="Leonardo_Phoenix_Create_a_visually_appealing_GuessMate_game_sc_1.jpg" />
+    <Resource Include="Leonardo_Phoenix_updatedpromptCreate_a_hauntingly_beautiful_da_0 (1).jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ServerSide\ServerSide.csproj" />
   </ItemGroup>
 
 </Project>

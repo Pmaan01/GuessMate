@@ -4,7 +4,7 @@
         Title="PlayGround" Height="900" Width="650" ResizeMode="NoResize"  WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,0,-6">
         <Grid.Background>
-            <ImageBrush ImageSource="/Leonardo_Phoenix_Create_a_hauntingly_suspenseful_background_im_3.jpg"/>
+            <ImageBrush ImageSource="/Leonardo_Phoenix_Create_a_mysterious_and_beautiful_image_for_t_0 (1).jpg"/>
         </Grid.Background>
         <!-- Player List -->
         <ListBox Name="PlayersList" RenderTransformOrigin="0.5,0.5" Foreground="White" Margin="274,690,20,10" FontSize="24" FontFamily="Ink Free" FontWeight="Bold" >
@@ -24,14 +24,21 @@
 
         <!-- Hint Display -->
         <TextBlock Name="HintTextBlock" Width="269" Height="138" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="286,749,0,0" FontSize="24" FontFamily="Ink Free" Foreground="Beige" FontWeight="Bold" TextWrapping="Wrap"/>
-        <Label Name="Round" Content="Round: 1 out of 5" FontSize="16" Foreground="Beige" Margin="10,7,403,811" FontFamily="Ink Free" FontWeight="Bold"/>
+        <Label Name="Round" Content="Round: 1 out of 5" FontSize="16" Foreground="Beige" Margin="10,7,491,825" FontFamily="Ink Free" FontWeight="Bold">
+            <Label.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="#FFC5A947" Offset="1"/>
+                </LinearGradientBrush>
+            </Label.Background>
+        </Label>
         <!-- Timer Display -->
         <TextBlock Name="TimerDisplay" Width="229" Height="52" Visibility="Hidden" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24" FontWeight="Bold" Foreground="Beige" Margin="434,462,0,0" FontFamily="Ink Free"/>
         <TextBlock Name="textBlockWaitingForPlayers" Width="241" Height="47" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="415,562,0,0" FontSize="24" Foreground="Beige" Visibility="Visible" FontFamily="Ink Free" FontWeight="Bold"/>
         <Label Name="Turn" Width="254" Height="35" FontSize="20" FontFamily="ink Free" Foreground="Beige" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,574,0,0" Content="Current Player: " FontWeight="Bold" />
-        <Image Name="PictureDisplay" HorizontalAlignment="Center" VerticalAlignment="Top" Width="103" Height="149" Margin="0,511,0,0" RenderTransformOrigin="0.5,0.5" Source="/b.jpg">
+        <Image Name="PictureDisplay" HorizontalAlignment="Center" VerticalAlignment="Top" Width="103" Height="149" Margin="0,511,0,0" RenderTransformOrigin="0.5,0.5" Source="/d.jpg">
             <Image.OpacityMask>
-                <ImageBrush ImageSource="/a.jpg"/>
+                <ImageBrush ImageSource="/d.jpg"/>
             </Image.OpacityMask>
 
             <Image.RenderTransform>
@@ -45,16 +52,22 @@
         </Image>
 
         <!-- MediaElement for Background Music -->
-        <MediaElement x:Name="BackgroundMusic" Source="C:\Users\gurwi\Downloads\swift-valkyrie-remastered-229741.mp3" 
+        <MediaElement x:Name="BackgroundMusic" Source="C:\Users\gurwi\Downloads\play.mp3" 
                      LoadedBehavior="Manual" UnloadedBehavior="Stop" Volume="0.5" Visibility="Hidden"></MediaElement>
 
         <!-- Music Control Button -->
-        <Button x:Name="Music" Content="Turn Off Music" Width="150" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top"
-                Background="#FF222327" Foreground="White" FontWeight="Bold" FontSize="14" FontFamily="Ink Free" Click="TurnOffMusicButton_Click" Margin="480,0,0,0"/>
+        <Button x:Name="Music" Content="Turn Off Music" Width="150" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontSize="14" FontFamily="Ink Free" Click="TurnOffMusicButton_Click" Margin="480,0,0,0">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="#FF856C29" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
         <Label Content="What’s Your Guess?" Foreground="Beige" FontSize="20" FontFamily="Ink Free" Margin="35,629,364,210" FontWeight="Bold"/>
         <StackPanel Name="AnswerOptions" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="43,674,0,0" Visibility="Visible" Width="160">
             <StackPanel.Background>
-                <ImageBrush ImageSource="/Leonardo_Phoenix_Create_a_hauntingly_atmospheric_game_backgrou_1.jpg"/>
+                <ImageBrush/>
             </StackPanel.Background>
 
 

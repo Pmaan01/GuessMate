@@ -1,19 +1,13 @@
 ﻿<Window x:Class="GuessMate.FinalScores"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="GuessMate - Final Scores" Height="800" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Grid>
+        Title="GuessMate - Final Scores" Height="917" Width="783" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid Margin="0,0,0,-6">
         <Grid.Background>
             <ImageBrush ImageSource="/Leonardo_Phoenix_Create_a_visually_appealing_GuessMate_game_sc_1.jpg"/>
         </Grid.Background>
 
-        <Button x:Name="Music" Content="Turn Off Music" Margin="340,25,58,732" Click="TurnOffMusicButton_Click" FontFamily="Lucida Handwriting" FontWeight="Bold" Foreground="White" FontSize="10">
-            <Button.Background>
-                <RadialGradientBrush>
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="#FF1C1C20" Offset="1"/>
-                </RadialGradientBrush>
-            </Button.Background>
+        <Button x:Name="Music" Content="Turn Off Music" Margin="0,668,0,0" Click="TurnOffMusicButton_Click" Width="178" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top"  Background="#FFADA08A" Foreground="#FF3C1B1A" FontSize="20" FontFamily="Script MT Bold">
             <Button.OpacityMask>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -23,7 +17,7 @@
         </Button>
 
         <MediaElement x:Name="BackgroundMusic" 
-                      Source="C:\Users\gurwi\Downloads\a-druidesa-171837.mp3" 
+                      Source="C:\Users\gurwi\Downloads\end.mp3" 
                       LoadedBehavior="Manual" 
                       UnloadedBehavior="Stop" 
                       Volume="0.5" 
@@ -34,8 +28,8 @@
         <ListBox Name="FinalScoresList" 
          HorizontalAlignment="Center" 
          VerticalAlignment="Center"  
-         Width="300" 
-         Height="290" 
+         Width="460" 
+         Height="344" 
          Background="#FF050809" 
          Foreground="White" 
          FontSize="16" 
@@ -49,9 +43,19 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Name="ExitButton" Content="Exit Game" Width="120" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,615,0,0" Click="ExitButton_Click" Background="#FFADA08A" Foreground="#FF3C1B1A" FontSize="20" FontFamily="Script MT Bold"/>
-
+        <Button Name="ExitButton" Content="Exit Game" Width="178" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,756,0,0" Click="ExitButton_Click" Background="#FFADA08A" Foreground="#FF3C1B1A" FontSize="20" FontFamily="Script MT Bold"/>
+        <!-- Add View High Scores Button -->
+        <Button Name="ViewHighScoresButton" Content="View High Scores" Width="178" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,801,0,0" Click="ViewHighScoresButton_Click" Background="#FFADA08A" Foreground="#FF3C1B1A" FontSize="20" FontFamily="Script MT Bold" RenderTransformOrigin="0.5,0.5">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="-2.182"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="0.762"/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
         <!-- Add Play Again Button -->
-        <Button Name="PlayAgainButton" Content="Play Again" Width="120" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,565,0,0" Click="PlayAgainButton_Click" Background="#FFADA08A" Foreground="#FF3C1B1A" FontSize="20" FontFamily="Script MT Bold"/>
+        <Button Name="PlayAgainButton" Content="Play Again" Width="178" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,711,0,0" Click="PlayAgainButton_Click" Background="#FFADA08A" Foreground="#FF3C1B1A" FontSize="20" FontFamily="Script MT Bold"/>
     </Grid>
 </Window>

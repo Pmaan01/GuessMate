@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ServerSide;
+using System;
+using System.Collections.Generic;
 using System.Windows;
 using static GuessMate.MainWindow;
 
@@ -6,17 +8,23 @@ namespace GuessMate
 {
     public partial class FinalScores : Window
     {
-        public FinalScores(GameSession gameSession)
+        private GameClient _gameClient; // Reference to GameClient instance
+
+        private string _currentPlayerName; // Store the current player's name
+
+        public FinalScores(GameSession gameSession, GameClient gameClient, string currentPlayerName)
         {
             InitializeComponent();
             UpdateMusicState();
 
+            _gameClient = gameClient; // Correctly assign the GameClient instance
+            _currentPlayerName = currentPlayerName; // Store the current player's name
             // Variable to track the highest score and the corresponding players
             int highestScore = int.MinValue;
             List<string> winners = new List<string>(); // List to hold names of players with the highest score
 
             // Populate the FinalScoresList and determine the winners
-            foreach (var player in GameSession.Players)
+            foreach (var player in GameSession.Players) // Use the passed gameSession
             {
                 FinalScoresList.Items.Add($"{player.Name}: {player.Score}");
 
@@ -55,6 +63,7 @@ namespace GuessMate
                 }
             }
         }
+
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown(); // Close the application
@@ -93,13 +102,37 @@ namespace GuessMate
         private void PlayAgainButton_Click(object sender, RoutedEventArgs e)
         {
             // Create a new instance of MainWindow
-           // MainWindow mainWindow = new MainWindow();
+            MainWindow mainWindow = new MainWindow(new GameServerFactory()); // Pass the factory or appropriate parameters
 
             // Show the MainWindow
-            //mainWindow.Show();
+            mainWindow.Show();
 
             // Close the FinalScores window
             this.Close();
+        }
+        private async void ShowHighScores()
+        {
+            // Request high scores from the server
+            var highScores = await _gameClient.RequestHighScoresAsync();
+
+            // Display only the current player's high score
+            string scoreList = $"High Score for {_currentPlayerName}:\n";
+
+            if (highScores.TryGetValue(_currentPlayerName, out int playerScore))
+            {
+                scoreList += $"{_currentPlayerName}: {playerScore}\n";
+            }
+            else
+            {
+                scoreList += $"{_currentPlayerName}: No score available.\n";
+            }
+
+            MessageBox.Show(scoreList);
+        }
+
+        private void ViewHighScoresButton_Click(object sender, RoutedEventArgs e)
+        {
+            ShowHighScores(); // Call the method to show high scores
         }
     }
 }

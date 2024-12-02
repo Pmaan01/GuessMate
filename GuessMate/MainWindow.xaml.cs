@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using ServerSide;
 
 namespace GuessMate
 {
@@ -14,7 +16,7 @@ namespace GuessMate
         public static string gameCode;
         GameLobby gameLobby;
         private Thread serverThread;
-
+        private const string DefaultPlayerName = "Player1"; // Default player name
         // Use constructor dependency injection
         private readonly IGameServerFactory _serverFactory;
 
@@ -43,26 +45,39 @@ namespace GuessMate
             {
                 gameServer = new GameServer(gameCode);
                 gameServer.StartServer();
+
+                // You can add logic here to wait until the server is fully started
+                while (!gameServer.IsServerReady)  // Assuming you have an IsServerReady property
+                {
+                    Thread.Sleep(100); // Wait for server to be ready
+                }
             });
 
-            serverThread.IsBackground = true; // Ensure thread stops when app closes
+            serverThread.IsBackground = true;
             serverThread.Start();
         }
 
+
         private void StartGameButton_Click(object sender, RoutedEventArgs e)
         {
+           
             try
             {
                 if (_maxPlayers == 1)
                 {
                     _gameSession = new GameSession(GameMode.SinglePlayer);
                     gameServer = (GameServer)_serverFactory.CreateServer("SinglePlayer");
+                    gameServer.Expectedplayer = _maxPlayers;
                     gameServer.StartServer();
+                    
+                    gameClient = new GameClient();
+                    gameClient.ConnectToServer("1");
+                    gameClient.SendStartGameMessage();
 
                     MessageBox.Show("Game started in single-player mode.");
                     BackgroundMusic.Stop();
 
-                    gameLobby = new GameLobby(_gameSession, _maxPlayers, true, null, gameServer);
+                    gameLobby = new GameLobby(_gameSession, _maxPlayers, true, gameClient, gameServer);
                     gameLobby.Show();
                     this.Hide();
                 }
@@ -71,10 +86,18 @@ namespace GuessMate
                     _gameSession = new GameSession(GameMode.MultiPlayer); // Initialize for multiplayer
                     gameCode = GenerateRandomCode();
                     gameServer = (GameServer)_serverFactory.CreateServer(gameCode);
+                    gameServer.Expectedplayer = _maxPlayers;
+                    GameServer.PopulateActiveServers();
+                    GameServer.LoadActiveServers();
+
+
                     gameServer.StartServer();
+                    GameServer.SaveActiveServers();
 
                     gameClient = new GameClient();
                     gameClient.ConnectToServer(gameCode);
+                    gameClient.SendStartGameMessage();
+                    
 
                     MessageBox.Show($"Game started with code: {gameCode}. Share this code with your friends.");
                     BackgroundMusic.Stop();
@@ -94,16 +117,22 @@ namespace GuessMate
         {
             CustomInputDialog inputDialog = new CustomInputDialog();
             bool? result = inputDialog.ShowDialog();
-             _gameSession = new GameSession(GameMode.MultiPlayer);
-            string enteredGameCode = inputDialog.InputTextBox.Text;
 
+            string enteredGameCode = inputDialog.InputTextBox.Text;
             // Attempt to connect using the entered game code
-            gameServer = GameServer.Connect(enteredGameCode);
-            if(gameServer == null)
+            GameSession gameSession = new GameSession(GameMode.MultiPlayer);
+            gameServer = GameServer.JoinGame(enteredGameCode, DefaultPlayerName);
+            gameClient = new GameClient();
+            gameClient.ConnectToServer(gameCode);
+            gameClient.JoinGame(gameCode);
+            gameClient.SendStartGameMessage();
+
+
+            if (gameServer == null)
             {
-                 MessageBox.Show("Error: Game server is null.");
+                MessageBox.Show("Error: Unable to connect to game server.");
             }
-           else
+            else
             {
                 MessageBox.Show($"Successfully connected to game server with code {enteredGameCode}.");
             }
@@ -114,7 +143,7 @@ namespace GuessMate
                     // If connection is successful, connect the client and proceed to the game lobby
                     gameClient = new GameClient();
                    
-                if (_gameSession == null)
+                if (gameSession == null)
                     {
                         MessageBox.Show("Error: Game session is not initialized.");
                         return;
@@ -131,7 +160,7 @@ namespace GuessMate
                         MessageBox.Show("Error: Game server is not initialized.");
                         return;
                     }
-                    gameLobby = new GameLobby(_gameSession, _maxPlayers, false, gameClient, gameServer);
+                    gameLobby = new GameLobby(gameSession, _maxPlayers, false, gameClient, gameServer);
                     if (gameLobby == null)
                     {
                         MessageBox.Show("Error: Game lobby is null.");

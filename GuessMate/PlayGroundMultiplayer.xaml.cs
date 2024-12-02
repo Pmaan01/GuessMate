@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32; // For file dialog
+using ServerSide;
 
 namespace GuessMate
 {

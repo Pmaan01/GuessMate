@@ -2,6 +2,7 @@
 using static GuessMate.MainWindow;
 using System.Windows.Controls;
 using System.Windows;
+using ServerSide;
 namespace GuessMate
 {
     public partial class GameLobby : Window
@@ -13,9 +14,9 @@ namespace GuessMate
         public static string category;
 
         private GameClient _gameClient;
-        private GameServer _gameServer; // Add this line
+        private ServerSide.GameServer _gameServer; // Add this line
 
-        public GameLobby(GameSession gameSession, int maxPlayers, bool isHost, GameClient gameClient, GameServer gameServer = null)
+        public GameLobby(GameSession gameSession, int maxPlayers, bool isHost, GameClient gameClient, GameServer gameServer )
         {
             InitializeComponent();
             UpdateMusicState();
@@ -143,6 +144,7 @@ namespace GuessMate
                 {
                     _gameServer.SetTheme(category);
                 }
+                _gameServer.StoreHighScore(playerName, 0); 
 
                 PlayerTurn playerTurnWindow = new PlayerTurn(_gameSession, _gameClient, _gameServer);
                 playerTurnWindow.Show();

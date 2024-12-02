@@ -7,6 +7,7 @@ using Microsoft.Win32;
 using System.Windows.Media.Imaging;
 using System.IO;
 using static GuessMate.MainWindow;
+using ServerSide;
 
 namespace GuessMate
 {
@@ -170,7 +171,7 @@ namespace GuessMate
         private void OpenPlayGroundWindow()
         {
             // Create an instance of the Playground window for single-player (against PC)
-            PlayGround playGroundWindow = new PlayGround(_gameSession);
+            PlayGround playGroundWindow = new PlayGround(_gameSession, _gameClient);
 
             // Show the PlayGround window
             playGroundWindow.Show();

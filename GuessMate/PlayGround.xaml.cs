@@ -4,9 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using ServerSide;
+using static System.Formats.Asn1.AsnWriter;
 using static GuessMate.MainWindow;
 
 namespace GuessMate
@@ -26,14 +29,15 @@ namespace GuessMate
         Player oppositePlayer;
         private int currentRound = 0; // Track the current round
         private const int totalRounds = 5; // Total rounds to play
+        private GameClient client;
 
-        public PlayGround(GameSession gameSession)
+        public PlayGround(GameSession gameSession ,GameClient client)
         {
             InitializeComponent();
             UpdateMusicState();
             this.gameSession = gameSession;
             players = GameSession.Players;
-
+            this.client = client;
             if (players == null || players.Count == 0)
             {
                 MessageBox.Show("No players available.");
@@ -51,14 +55,24 @@ namespace GuessMate
             // Close the current game window
             this.Close();
             timer.Stop(); // Stop the timer
+            // Create a string to hold final scores
             string finalScores = "Final Scores:\n";
+
+            // Iterate through the list of players and send their scores to the server
             foreach (var player in players)
             {
+                int score = player.Score;
+                string playerName = player.Name;
+
+                // Append to finalScores string for display
                 finalScores += $"{player.Name}: {player.Score}\n";
+
+                // Send each player's score to the server
+                client.SendScoreToServer(playerName, score);
             }
 
             // Create an instance of the FinalScores window
-            FinalScores finalScoresWindow = new FinalScores(gameSession);
+            FinalScores finalScoresWindow = new FinalScores(gameSession, client,currentPlayer.Name);
 
             // Show the FinalScores window
             finalScoresWindow.Show();
@@ -399,7 +413,7 @@ namespace GuessMate
             ShuffleImagesAndDisplayHint();
 
             // Show dummy image initially
-            PictureDisplay.Source = new BitmapImage(new Uri("C:\\Users\\gurwi\\Downloads\\a.jpg", UriKind.Absolute));
+            PictureDisplay.Source = new BitmapImage(new Uri("C:\\Users\\gurwi\\Downloads\\d.jpg", UriKind.Absolute));
 
             // Start the timer for guessing
             timeLeft = 5;
