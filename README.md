@@ -10,16 +10,22 @@ Date	Comment	Author
 
 ### **Data Dictionary**
 
-| **Table**         | **Field**      | **Notes**                         | **Type**     |
-|-------------------|----------------|-----------------------------------|--------------|
-| **PlayerImagesDB** | PlayerName     | Player's name                     | VARCHAR      |
-|                   | ImageName      | Uploaded image's name             | VARCHAR      |
-|                   | Hint           | Hint for the image                | VARCHAR      |
-|                   | ImageData      | Byte array of image data          | VARBINARY    |
-| **GameResourcesDB**| Category       | Image category                    | VARCHAR      |
-|                   | ImageName      | Unique image identifier           | VARCHAR      |
-|                   | ImageData      | Byte array of image data          | VARBINARY    |
-|                   | ImageHint      | Hint for computer-selected image  | VARCHAR      |
+### **Data Dictionary**
+
+| **Table**           | **Field**      | **Notes**                             | **Type**     |
+|---------------------|----------------|---------------------------------------|--------------|
+| **PlayerImagesDB**  | Id             | Unique identifier for each record     | INT          |
+|                     | PlayerName     | Player's name                         | VARCHAR      |
+|                     | ImageName      | Name of the uploaded image            | VARCHAR      |
+|                     | Hint           | Hint for the uploaded image           | VARCHAR      |
+|                     | ImageData      | Byte array of image data              | VARBINARY    |
+|                     | ImagePath      | File path for the player-uploaded image | VARCHAR      |
+| **GameResourcesDB** | Id             | Unique identifier for each record     | INT          |
+|                     | Category       | Image category                        | VARCHAR      |
+|                     | ImageName      | Name of the image                     | VARCHAR      |
+|                     | ImageData      | Byte array of image data              | VARBINARY    |
+|                     | ImageHint      | Hint for computer-selected image      | VARCHAR      |
+|                     | ImagePath      | File path for the computer-selected image | VARCHAR      |
 
 
 Section 2 - Overview
