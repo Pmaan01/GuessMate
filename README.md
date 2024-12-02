@@ -91,8 +91,28 @@ Section 6 - User Interface Design
 •	PlayGround: The main game screen displaying images and allowing players to guess.
 •	FinalScores: Displays player scores at the end of the game.
 6.2 User Interface Navigation Flow
-•	MainWindow ➔ GameLobby ➔ PlayerTurn ➔ PlayGround ➔ FinalScores
- ![MainWindow Screenshot](GuessMate/Pictures/Main.png)
+•	MainWindow ➔ GameLobby ➔ PlayerTurn ➔ PlayGround ➔ 
+MainWindow
+This is the starting screen where players select the number of participants.
+
+ ![MainWindowScreenshot](GuessMate/Pictures/Main.png)
+
+GameLobby
+In this screen, players enter their names and choose a game theme.
+
+  ![Game Lobby](GuessMate/Pictures/Lobby.png)
+  
+
+PlayerTurn
+Here, players upload five images with corresponding hints. During the game, others will guess based on these hints.
+
+   ![Player Turn](GuessMate/Pictures/ImageUpload.png)
+
+
+PlayGround
+This screen displays one of the images shared by a player for others to guess.
+
+   ![Playground](GuessMate/Pictures/Playground.png)
 
 6.3 Use Cases / User Function Description
 •	PlayerTurn: Allows players to upload images and provide hints.
