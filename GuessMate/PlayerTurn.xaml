@@ -9,7 +9,7 @@
         </Grid.ColumnDefinitions>
         <!-- Background Image -->
         <Grid.Background>
-            <ImageBrush ImageSource="/Leonardo_Phoenix_Create_a_hauntingly_suspenseful_background_im_3.jpg"/>
+            <ImageBrush ImageSource="/Leonardo_Phoenix_Create_a_hauntingly_suspenseful_game_backgrou_2.jpg"/>
         </Grid.Background>
         <!-- Music Control Button -->
         <Button x:Name="Music" Content="Turn Off Music" Width="150" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,0,0,0"
