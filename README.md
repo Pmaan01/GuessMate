@@ -8,15 +8,19 @@ Section 1 - Project Description
 Date	Comment	Author
 30-Oct-2024	Initial draft	Parveen Kaur Maan
 
-Table	Field	Notes	Type
-PlayerImagesDB	PlayerName	Player's name	VARCHAR
-ImageName	Uploaded image's name	VARCHAR
-Hint	Hint for the image	VARCHAR
-ImageData	Byte array of image data	VARBINARY
-GameResourcesDB	Category	Image category	VARCHAR
-ImageName	Unique image identifier	VARCHAR
-ImageData	Byte array of image data	VARBINARY
-ImageHint	Hint for computer-selected image	VARCHAR
+### **Data Dictionary**
+
+| **Table**         | **Field**      | **Notes**                         | **Type**     |
+|-------------------|----------------|-----------------------------------|--------------|
+| **PlayerImagesDB** | PlayerName     | Player's name                     | VARCHAR      |
+|                   | ImageName      | Uploaded image's name             | VARCHAR      |
+|                   | Hint           | Hint for the image                | VARCHAR      |
+|                   | ImageData      | Byte array of image data          | VARBINARY    |
+| **GameResourcesDB**| Category       | Image category                    | VARCHAR      |
+|                   | ImageName      | Unique image identifier           | VARCHAR      |
+|                   | ImageData      | Byte array of image data          | VARBINARY    |
+|                   | ImageHint      | Hint for computer-selected image  | VARCHAR      |
+
 
 Section 2 - Overview
 2.1 Purpose
