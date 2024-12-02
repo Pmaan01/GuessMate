@@ -22,10 +22,10 @@ Section 2 - Overview
 •	R5: Display final scores at the end of the game in FinalScores.
 •	R6: Use AddImagesToDatabase for computer image storage.
 •	R7: Use PlayerImageDatabase for storing player-uploaded images.
-•	R8: Support client-server communication for multiplayer game logic.
+•	R8: Support client-server communication for HighCScore game logic.
 •	R9: Manage gameplay state, rounds, and turns through GameSession.
 2.3.2 Non-Functional Requirements
-•	Performance: The system should maintain smooth performance for up to 4 concurrent players.
+•	Performance: The system should maintain smooth performance single player game with Computer.
 •	Usability: Ensure the UI is easy to navigate, with clear prompts and controls.
 •	Reliability: The game should handle player disconnections and errors gracefully.
 2.3.3 Technical Requirements
@@ -92,7 +92,8 @@ Section 6 - User Interface Design
 •	FinalScores: Displays player scores at the end of the game.
 6.2 User Interface Navigation Flow
 •	MainWindow ➔ GameLobby ➔ PlayerTurn ➔ PlayGround ➔ FinalScores
- 
+ ![MainWindow Screenshot](GuessMate/Pictures/Main.png)
+
 6.3 Use Cases / User Function Description
 •	PlayerTurn: Allows players to upload images and provide hints.
 •	GameLobby: Sets up the game session by taking player details and theme selection.
