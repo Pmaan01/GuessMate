@@ -92,7 +92,7 @@ Section 6 - User Interface Design
 •	FinalScores: Displays player scores at the end of the game.
 6.2 User Interface Navigation Flow
 •	MainWindow ➔ GameLobby ➔ PlayerTurn ➔ PlayGround ➔ FinalScores
- ![MainWindow Screenshot](GuessMate/Pictures/Main.png)
+ ![MainWindowScreenshot](GuessMate/Pictures/Main.png)
 
 6.3 Use Cases / User Function Description
 •	PlayerTurn: Allows players to upload images and provide hints.
