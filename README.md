@@ -214,19 +214,72 @@ ________________________________________
 ________________________________________
 ## Section 8 - Monitoring
 
-- Monitor CPU load, memory usage, and response time on the server, especially during multiplayer gameplay.
+While the GuessMate game currently operates in a single-player mode, the following monitoring strategies are planned for future development and expansion, especially when introducing multiplayer functionality and ensuring scalability.
 
+1. CPU Load Monitoring:
+CPU usage will be tracked to ensure the game runs efficiently, even during image processing and hint management. This will help identify any bottlenecks during gameplay.
+2. Memory Usage:
+Memory usage will be monitored to avoid memory leaks or excessive consumption, particularly when handling large image uploads or managing multiple game sessions.
+3. Response Time and Latency:
+Response time for interactions such as image uploads, hint submissions, and game state updates will be measured to ensure smooth, real-time gameplay.
+4. Error Monitoring:
+Any errors or crashes related to the game flow (such as image upload failures, game state issues, or crashes) will be tracked to provide quick fixes and ensure a bug-free experience.
+5. Image Upload Performance:
+Image uploads will be closely monitored for performance, including upload times and storage interactions with the database, ensuring the system can handle various image sizes efficiently.
+6. Database Performance:
+The game’s interaction with its databases (such as storing images and updating player scores) will be closely monitored to ensure minimal delays or issues during these operations.
+7. Network Traffic and Bandwidth Usage:
+Network traffic will be monitored, particularly for image uploads and data transmission, to avoid connectivity issues or slowdowns during game interaction.
 ## Section 9 - Other Interfaces
+SQL Server Integration for Image Data Storage:
+The game uses SQL Server to store both player-uploaded images and computer-selected game resources. The system is designed to handle large datasets (images) efficiently.
 
-- SQL Server integration for image data storage.
+Database Structure: Two databases are used:
+PlayerImagesDB: Stores images uploaded by players, along with associated metadata (name, hint).
+GameResourcesDB: Stores images selected by the computer, including category and hint information.
+Stored Procedures:
+Stored procedures are implemented to handle:
+
+Insertion of images into the database.
+Retrieval of images based on category, name, and other filters.
+Deletion or modification of image records when necessary.
+Data Integrity:
+The system enforces data integrity by linking player names with their images using foreign keys. This ensures that images can be accurately tracked and retrieved based on player selections.
+
+File Storage Optimization:
+While images are stored in the database as VARBINARY, a hybrid approach can also be used, where images are stored in the file system and only file paths are saved in the database for improved performance.
+
+This will reduce database load during retrieval, particularly for high-resolution images.
 
 ## Section 10 - Extra Design Features / Outstanding Issues
+Potential Addition of More Interactive Themes or Single-Player Challenges:
+New Themes:
+Add more interactive themes like Famous Landmarks, Artworks, or Science, allowing players to choose from a broader range of categories. This will enhance the variety and replayability of the game.
 
-- Potential addition of more interactive themes or single-player challenges.
+Single-Player Challenges:
+Introduce challenges where the player needs to guess images with reduced hints or within a time limit, making the game more engaging. For example, "Time Trial" mode could have a countdown clock, while "Hintless" mode could remove the hints entirely, testing the player's memory and deduction skills.
+
+Multiplayer Mode:
+Multiplayer Functionality:
+Implement multiplayer functionality, allowing up to 4 players to compete against each other in real-time. Players will take turns displaying images and guessing the answers, with real-time scoring updates and interaction, fostering friendly competition.
+
+Playground Setup for Multiplayer:
+One of the main challenges for the multiplayer version will be setting up the Playground screen where multiple players can participate simultaneously. The screen should allow players to display images and take turns guessing based on the hints, with each player’s progress clearly visible. A robust turn-based system is needed to manage whose turn it is and to ensure smooth game flow.
 
 ## Section 11 – References
+Here is a list of the resources and references that have been used to develop the game:
 
-- C# documentation, WPF tutorials, SQL Server integration guides.
+C# Documentation:
+
+The official Microsoft C# Documentation (https://learn.microsoft.com/en-us/dotnet/csharp/) is referenced for understanding language syntax, features, and best practices in C# development.
+WPF Tutorials:
+
+Tutorials and guides from Microsoft Docs and community-driven sites like WPF Tutorial (https://www.wpftutorial.net/) were used to create the game’s UI.
+SQL Server Integration Guides:
+
+Official SQL Server documentation (https://docs.microsoft.com/en-us/sql/sql-server/) was used to handle image storage and queries efficiently.
+SQL Server Performance Tuning resources were consulted to optimize database performance, especially when handling large image files.
+
 
 ## Section 12 – Glossary
 
