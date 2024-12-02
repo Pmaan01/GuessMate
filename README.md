@@ -99,7 +99,7 @@ The system follows a client-server architecture for single-player gameplay, wher
 **ERD Diagram**  
 
 
-*![ERD Diagram ](GuessMate/Pictures/ERD.png)*
+*![ERD](GuessMate/Pictures/ERD.png)*
 
 ## Section 4 - Data Dictionary
 
@@ -146,7 +146,8 @@ The system follows a client-server architecture for single-player gameplay, wher
 
 ### 6.2 User Interface Navigation Flow
 
-MainWindow ➔ GameLobby ➔ PlayerTurn ➔ PlayGround ➔ FinalScores
+*![User Flow](GuessMate/Pictures/UserFlow.png)*
+
 
 This is the starting screen where players select the number of participants.
 
