@@ -50,7 +50,7 @@ namespace GuessMate
             ShowCurrentPlayer();
             this.Closing += PlayGround_Closing;
         }
-        private void EndGame()
+        public void EndGame()
         {
             // Close the current game window
             this.Close();
@@ -103,7 +103,7 @@ namespace GuessMate
             Option4.IsEnabled = isEnabled;
             Option5.IsEnabled = isEnabled;
         }
-        private void StartComputerTurn()
+        public void StartComputerTurn()
         {
             DispatcherTimer computerTimer = new DispatcherTimer
             {
@@ -118,7 +118,7 @@ namespace GuessMate
 
             computerTimer.Start();
         }
-        private void ComputerPlayerTurn()
+        public void ComputerPlayerTurn()
         {
             // Create a new instance of Random with a time-based seed
             Random rand = new Random(DateTime.Now.Millisecond + currentPlayerIndex); // Use time and player index to seed
@@ -319,13 +319,13 @@ namespace GuessMate
             timer.Tick += Timer_Tick; // Subscribe to the Tick event
         }
 
-        private void StartTimer()
+        public void StartTimer()
         {
             timeLeft = 5; // Reset timer for each turn to 5 seconds
             TimerDisplay.Text = $"Time Left: {timeLeft}s"; // Show initial time on the UI
             timer.Start();
         }
-        private void Timer_Tick(object sender, EventArgs e)
+        public void Timer_Tick(object sender, EventArgs e)
         {
             if (timeLeft > 0)
             {
@@ -431,7 +431,7 @@ namespace GuessMate
                 }
             };
         }
-        private void ShowCurrentPlayer()
+        public void ShowCurrentPlayer()
         {
             if (currentPlayerIndex < 0 || currentPlayerIndex >= players.Count)
             {

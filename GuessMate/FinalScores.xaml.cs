@@ -8,6 +8,8 @@ namespace GuessMate
 {
     public partial class FinalScores : Window
     {
+        private List<Player> players;
+        private PlayerImageDatabaseHelper playerImageDatabaseHelper = new PlayerImageDatabaseHelper();
         private GameClient _gameClient; // Reference to GameClient instance
 
         private string _currentPlayerName; // Store the current player's name
@@ -16,6 +18,7 @@ namespace GuessMate
         {
             InitializeComponent();
             UpdateMusicState();
+            players = GameSession.Players;
 
             _gameClient = gameClient; // Correctly assign the GameClient instance
             _currentPlayerName = currentPlayerName; // Store the current player's name
@@ -101,11 +104,17 @@ namespace GuessMate
 
         private void PlayAgainButton_Click(object sender, RoutedEventArgs e)
         {
+            foreach (var player in players)
+            {
+                playerImageDatabaseHelper.RemovePlayerImages(player.Name);
+            }
+
             // Create a new instance of MainWindow
             MainWindow mainWindow = new MainWindow(new GameServerFactory()); // Pass the factory or appropriate parameters
 
             // Show the MainWindow
             mainWindow.Show();
+
 
             // Close the FinalScores window
             this.Close();
@@ -114,7 +123,7 @@ namespace GuessMate
         {
             // Request high scores from the server
             var highScores = await _gameClient.RequestHighScoresAsync();
-
+            
             // Display only the current player's high score
             string scoreList = $"High Score for {_currentPlayerName}:\n";
 

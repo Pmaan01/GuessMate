@@ -84,9 +84,9 @@ namespace GuessMate
         {
             if (_isHost) // Only allow the host to select the theme
             {
-                if (GameModeComboBox.SelectedItem == null)
+                if (GameModeComboBox.SelectedItem == null || PlayerNameTextBox.Text == "")
                 {
-                    MessageBox.Show("Please select a valid theme.");
+                    MessageBox.Show("Please Fill all the details.");
                     return;
                 }
 
